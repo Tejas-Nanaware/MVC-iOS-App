@@ -16,6 +16,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         return items.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = items[indexPath.row]
+        performSegue(withIdentifier: "sendVideo", sender: item)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? VideoViewController {
+            if let singleItem = sender as? cellModel {
+                destination.item = singleItem
+            }
+        }
+    }
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ViewCell {
